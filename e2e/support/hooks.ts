@@ -20,4 +20,4 @@ After({timeout: 100 * 1000}, async function(scenario) {
         // attach the screenshot to the report
         this.attach(screenShot, "image/png");
     }
-};
+});
