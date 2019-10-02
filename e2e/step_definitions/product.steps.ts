@@ -14,14 +14,21 @@ const viewProductPage: ViewProductPage = new ViewProductPage();
 const chai = require("chai").use(require("chai-as-promised"));
 const expect = chai.expect;
 
-Given("a product doesnt exist", function(dataTable) {
+Given("a product doesnt exist", async function(dataTable) {
     const arrayOfProducts = dataTable.hashes();
     this.product = arrayOfProducts[0];
     /*
     * This removes the previous product
     */
-    homePage.findProductInTable(this.product).click();
-    viewProductPage.deleteButton.click();
+    // homePage.findProductInTable(this.product).click();
+    // viewProductPage.deleteButton.click();
+    while (await homePage.findProductsInTable(this.product).count() > 0) {
+
+    // We've also changed the line below to click on the first product found.
+    homePage.findProductsInTable(this.product).first().click();
+
+    this.actions.click(viewProductPage.deleteButton);
+    }
 
     return expect(homePage.findProductInTable(this.product).isPresent()).to.eventually.be.false;
   });

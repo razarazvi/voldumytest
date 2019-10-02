@@ -13,4 +13,9 @@ export class HomePage {
 public findProductInTable = (product: myLib.Product) => {
     return element(by.cssContainingText(".mat-cell", product.name));
 }
+
+public findProductsInTable = (product: myLib.Product) => {
+    return element.all(by.cssContainingText(".mat-cell", product.name));
+}
+
 }
