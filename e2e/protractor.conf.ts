@@ -4,7 +4,9 @@ export const config: Config = {
 
     seleniumAddress: "http://127.0.0.1:4444/wd/hub",
 
-    baseUrl: "http://localhost:8080/",
+    baseUrl: "https://us.val.mamvol.uk/r/1.8.4/web/authenticate",
+
+    allScriptsTimeout: 60000,
 
     framework: "custom",
     frameworkPath: require.resolve("protractor-cucumber-framework"),
@@ -22,7 +24,7 @@ export const config: Config = {
         format: "json:.tmp/results.json",
         profile: false,
         require: ["./step_definitions/*.steps.js", "./support/hooks.js"],
-        tags: false,
+        tags: "not @ignore",
         "no-source": true,
     },
 

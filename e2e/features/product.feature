@@ -8,6 +8,7 @@ Feature: Product Management
         | name    | description       | price |
         | carrots | orange vegetables | 10    |
 
+    @ignore
     Scenario: A product is added
         When I add the product
         Then the product is created

@@ -5,6 +5,7 @@ import { browser } from "protractor";
 // This will run before each scenario
 Before({timeout: 100 * 1000}, async function() {
 
+    browser.waitForAngularEnabled(false);
     // Opens the website to the default URL in the 'protractor.config.ts' file
     await browser.get("");
 
