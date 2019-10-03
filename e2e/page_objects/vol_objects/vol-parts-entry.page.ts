@@ -1,4 +1,4 @@
-import { $, element, by, browser, ExpectedConditions } from "protractor";
+import { $, element, by, browser, ExpectedConditions, ElementFinder } from "protractor";
 
 export class VolPartsEntryPage{
 
@@ -8,16 +8,8 @@ export class VolPartsEntryPage{
 
     public selectCustomerButton = $("button#btnselectCust");
 
-    public findCustomerInTable = (customerName) => {
+    public searchResultsTable = $("div#gridcustomerSearchGrid");
 
-        let grid = $("div#gridcustomerSearchGrid");
-        let row = grid.$("div.ui-grid-cell-contents.ng-binding.ng-scope");
-
-
-        browser.wait(ExpectedConditions.visibilityOf(row));
-
-        return grid
-            .all(by.cssContainingText("div.ui-grid-cell-contents.ng-binding.ng-scope", customerName));
-    }
+    public searchResultsRowSelector = "div.ui-grid-cell-contents.ng-binding.ng-scope";
 
 }

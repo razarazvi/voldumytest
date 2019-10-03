@@ -2,7 +2,6 @@ import { When, Then, Given, setDefaultTimeout } from "cucumber";
 import {VolHomePage } from "../page_objects/vol_objects/vol-home.page";
 import {VolLoginPage} from "../page_objects/vol_objects/vol-login.page";
 import {VolPartsEntryPage} from "../page_objects/vol_objects/vol-parts-entry.page";
-import { browser, ExpectedConditions, ElementArrayFinder, ElementFinder } from "protractor";
 
 const volHomePage: VolHomePage = new VolHomePage();
 const volLoginPage: VolLoginPage = new VolLoginPage();
@@ -11,8 +10,11 @@ const volPartsEntryPage: VolPartsEntryPage = new VolPartsEntryPage();
 const chai = require("chai").use(require("chai-as-promised"));
 const expect = chai.expect;
 
+setDefaultTimeout(60 * 1000);
+
 
 Given('a user logs in with username {string} and password {string}', function (username, password) {
+
   // Write code here that turns the phrase above into concrete actions
   volLoginPage.usernameField.sendKeys(username);
   volLoginPage.passwordField.sendKeys(password);
@@ -21,26 +23,16 @@ Given('a user logs in with username {string} and password {string}', function (u
 
 When('we select a customer called {string}', async function (customerName) {
   
-  browser.wait(ExpectedConditions.elementToBeClickable(volHomePage.customerContactButton));
-  volHomePage.customerContactButton.click();
+  this.actions.click(volHomePage.customerContactButton);
 
-  browser.wait(ExpectedConditions.visibilityOf(volPartsEntryPage.nameSearchField));
-  volPartsEntryPage.nameSearchField.sendKeys(customerName);
+  this.actions.type(volPartsEntryPage.nameSearchField, customerName);
 
-  browser.wait(ExpectedConditions.elementToBeClickable(volPartsEntryPage.customerSearchButton));
-  volPartsEntryPage.customerSearchButton.click();
+  this.actions.click(volPartsEntryPage.customerSearchButton);
 
-  let waitForResults = (searchTerm: string) => {
-    return volPartsEntryPage.findCustomerInTable(searchTerm).then((results) => {
-      return results.length > 0;
-    })
-  }
+  // volPartsEntryPage.findCustomerInTable(customerName).first().click();
+  this.actions.clickOnElementInTable(volPartsEntryPage.searchResultsTable, volPartsEntryPage.searchResultsRowSelector, customerName);
 
-  browser.wait(waitForResults(customerName));
-  volPartsEntryPage.findCustomerInTable(customerName).first().click();
-
-  browser.wait(ExpectedConditions.elementToBeClickable(volPartsEntryPage.selectCustomerButton));
-  return volPartsEntryPage.selectCustomerButton.click();
+  return this.actions.click(volPartsEntryPage.selectCustomerButton);
 
 });
 
