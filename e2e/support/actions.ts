@@ -2,7 +2,7 @@ import { ElementFinder, ExpectedConditions, browser, by } from "protractor";
 
 export class Actions {
 
-    public type = async (element: ElementFinder, text: string) => {
+    public sendKeys = async (element: ElementFinder, text: string) => {
         await browser.wait(ExpectedConditions.visibilityOf(element));
         await element.sendKeys(text);
     }
